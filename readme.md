@@ -12,7 +12,7 @@ Goals
 Build a Comment Feature for a Blog
 
 #### Minimum Features
-1) Post a comment and view it
+1) Post a comment and view it with a timestamp
 2) Edit a comment and view it
 3) Delete a comment
 
