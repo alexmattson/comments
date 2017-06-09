@@ -16,7 +16,7 @@ module.exports = {
     },
     entry: {
         app: ['react-hot-loader/patch',
-        './app/components']
+        './app']
     },
     output: {
         path: path.resolve(__dirname, 'static'),
@@ -36,12 +36,12 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
+                test: /\.js?x?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
                     //specify that we will be dealing with React code
-                    presets: [require('babel-preset-es2015'), 'react'],
+                    presets: ['es2015', 'react', 'stage-1'],
                     plugins: ['react-hot-loader/babel']
                 }
             },
@@ -73,6 +73,5 @@ module.exports = {
     resolve: {
         modules: ['node_modules'],
         extensions: ['.js', '.jsx']
-    }
-
+    },
 };
