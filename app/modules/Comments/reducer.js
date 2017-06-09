@@ -21,8 +21,8 @@ const initialState = {
     id: 1234,
     body: 'I really like what you made here, keep up the good work.',
     owner: 765432,
-    createdAt: moment.now(),
-    lastEditedAt: moment.now(),
+    createdAt: moment().subtract(3, 'days'),
+    lastEditedAt: moment().subtract(3, 'days'),
     likes: [654321, 765432, 876543]
   }
 };

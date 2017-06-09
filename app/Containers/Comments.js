@@ -4,24 +4,33 @@ import { connect } from 'react-redux';
 import Comment from '../components/Comment/Comment';
 import EditComment from '../components/Comment/EditComment';
 import { addComment } from '../modules/Comments/actions';
+import { changeSorting } from '../modules/Users/actions';
 
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = state => ({
+  sorting: state.currentUser.prefrences.sorting,
   currentUser: state.currentUser,
-  comments: Object.values(state.comments)
+  comments: Object.values(state.comments).sort(handleSort(state.currentUser.prefrences.sorting))
 });
 
-const sortByTime = (a, b) => a.time < b.time;
+const mapDispatchToProps = dispatch => ({
+  dispatchChangeSorting: (type) => {
+    dispatch(changeSorting(type));
+  }
+});
+
+const handleSort = type => {
+  switch(type) {
+    case 'likes':
+      return sortByLikes;
+    default:
+      return sortByTime;
+  }
+};
+const sortByTime = (a, b) => a.lastEditedAt < b.lastEditedAt;
 const sortByLikes = (a, b) => a.likes.length < b.likes.length;
 
 export class Comments extends _Base {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      comments: props.comments,
-    };
-  }
 
   renderComments() {
     const { comments } = this.props;
@@ -31,17 +40,9 @@ export class Comments extends _Base {
     ));
   }
 
-  handleSort(type) {
-    const { comments } = this.props;
-    return () => {
-      switch(type) {
-        case 'likes':
-          this.setState({ comments: comments.sort(sortByLikes) });
-          break;
-        default:
-          this.setState({ comments: comments.sort(sortByLikes) });
-      }
-    };
+  handleChangeSort(type) {
+    const { dispatchChangeSorting } = this.props;
+    return () => dispatchChangeSorting(type);
   }
 
   render() {
@@ -50,8 +51,8 @@ export class Comments extends _Base {
         <h1> COMMENTS </h1>
         <div className="sort-container">
           <p className="flex-center">sort by</p>
-          <button onClick={this.handleSort("time")}>Time</button>
-          <button onClick={this.handleSort("likes")}>Likes</button>
+          <button onClick={this.handleChangeSort("time")}>Time</button>
+          <button onClick={this.handleChangeSort("likes")}>Likes</button>
         </div>
         {this.renderComments()}
         <EditComment newComment />
@@ -60,4 +61,4 @@ export class Comments extends _Base {
 	}
 }
 
-export default connect(mapStateToProps)(Comments);
+export default connect(mapStateToProps, mapDispatchToProps)(Comments);
