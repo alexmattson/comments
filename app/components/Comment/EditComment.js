@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch, props) => ({
 export class Comment extends _Base {
   static propTypes = {
     newComment: PropTypes.bool,
+    comment: PropTypes.object,
   }
 
   static defaultValues = {

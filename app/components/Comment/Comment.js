@@ -14,7 +14,6 @@ export class Comment extends _Base {
 
     this.state = {
       editMode: false,
-      comment: props.comment.body
     };
   }
 

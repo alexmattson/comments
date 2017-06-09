@@ -5,7 +5,7 @@ import Comment from '../components/Comment/Comment';
 import EditComment from '../components/Comment/EditComment';
 import { addComment } from '../modules/Comments/actions';
 import { changeSorting } from '../modules/Users/actions';
-
+import { handleSort } from '../utils/sorting';
 
 const mapStateToProps = state => ({
   sorting: state.currentUser.prefrences.sorting,
@@ -18,17 +18,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changeSorting(type));
   }
 });
-
-const handleSort = type => {
-  switch(type) {
-    case 'likes':
-      return sortByLikes;
-    default:
-      return sortByTime;
-  }
-};
-const sortByTime = (a, b) => a.lastEditedAt < b.lastEditedAt;
-const sortByLikes = (a, b) => a.likes.length < b.likes.length;
 
 export class Comments extends _Base {
 

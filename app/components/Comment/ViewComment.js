@@ -34,14 +34,12 @@ export class Comment extends _Base {
     super(props);
 
     this.state = {
-      editMode: false,
       comment: props.comment.body
     };
   }
 
-  toggleEdit() {
-    const { editMode } = this.state;
-    this.setState({ editMode: !editMode});
+  static propTypes = {
+    comment: PropTypes.object,
   }
 
   handleLike() {
